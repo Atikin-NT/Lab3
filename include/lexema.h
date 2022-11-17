@@ -17,6 +17,13 @@ class Lexema {
     TypeElement type;
 public:
     Lexema(string _str, TypeElement _type) : str(_str), type(_type) {};
+    Lexema& operator=(const Lexema& lx){
+        if(this == &lx)
+            return *this;
+        str = lx.str;
+        type = lx.type;
+        return *this;
+    }
     string getStr() { return str; }
     TypeElement getType() { return type; }
     friend ostream& operator << (ostream& out, Lexema& p) {

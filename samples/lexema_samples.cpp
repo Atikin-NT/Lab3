@@ -1,8 +1,9 @@
 ﻿#include <string>
 #include <iostream>
 #include <queue>
-#include "parser.h"
+#include "lexema.h"
 #include "automata.h"
+#include "syntax.h"
 
 // Лексический
 // Синтаксический
@@ -38,10 +39,13 @@ void print(queue <Lexema> t) {
 }
 
 int main() {
-    string str = "( 123 -10)/ 50 *	\t	30 \n";
+    string str = "( 123 +10 * 2-1)/ 20\n";
     cout << str;
     queue <Lexema> lex_res;
     lex_res = lex(str);
     print(lex_res);
+    Syntax syntax(lex_res);
+    syntax.polskaWrite();
+    cout << "res = " << syntax.calculate() << endl;
     return 0;
 }

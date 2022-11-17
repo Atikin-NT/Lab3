@@ -7,7 +7,7 @@
 
 #include <string>
 #include <queue>
-#include "parser.h"
+#include "lexema.h"
 using namespace std;
 
 void digit(char& c, string& tmp, queue<Lexema>& res, int& state);
