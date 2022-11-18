@@ -13,9 +13,8 @@ using namespace std;
 class Syntax{
     queue <Lexema> lex_res;
     queue <Lexema> syn_res;
-    double res;
 public:
-    Syntax(queue <Lexema> _lex_res): lex_res(_lex_res), res(0){}
+    Syntax(queue <Lexema> _lex_res): lex_res(_lex_res){}
     void polskaWrite();
     double calculate();
 };

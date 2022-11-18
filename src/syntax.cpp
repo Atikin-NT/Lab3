@@ -4,12 +4,12 @@
 #include <string>
 #include <stack>
 
-map<char, int> operations = {{'(', 0},
-                             {')', 0},
-                             {'-', 1},
-                             {'+', 1},
-                             {'*', 2},
-                             {'/', 2}};
+map<string, int> operations = {{"(", 0},
+                             {")", 0},
+                             {"-", 1},
+                             {"+", 1},
+                             {"*", 2},
+                             {"/", 2}};
 
 void print1(queue <Lexema> t) {
     while (!t.empty()) {
@@ -18,7 +18,7 @@ void print1(queue <Lexema> t) {
     }
 }
 
-void printStack(stack<char> st){
+void printStack(stack<string> st){
     while(!st.empty()){
         cout << st.top() << " ";
         st.pop();
@@ -36,41 +36,58 @@ void printDoubleStack(stack<double> st){
 
 void Syntax::polskaWrite() {
     cout << endl;
-    stack<char> operStack;
+    stack<string> operStack;
     int scobaCount = 0;
+    int elementErrorIndex = -1;
     while(!lex_res.empty()){
         Lexema tmp = lex_res.front();
         if(tmp.getType() == Operation){
-            if(tmp.getStr()[0] == '(') scobaCount++;
-            if(tmp.getStr()[0] == ')') scobaCount--;
+            if(tmp.getStr() == "(") {
+                scobaCount++;
+                elementErrorIndex = lex_res.size();
+            }
+            if(tmp.getStr() == ")") {
+                scobaCount--;
+            }
+            if(tmp.getStr() == "(") {
+                operStack.push(tmp.getStr());
+                lex_res.pop();
+                continue;
+            }
             while(!operStack.empty()){
-                char prevOper = operStack.top();
-                if(operations[prevOper] >= operations[tmp.getStr()[0]]){
-                    if(prevOper != ')' && prevOper != '(') {
-                        syn_res.push(Lexema(string(1, prevOper), Operation));
+                string prevOper = operStack.top();
+                if(operations[prevOper] >= operations[tmp.getStr()]){
+                    if(prevOper == "(" && tmp.getStr() == ")") {
+                        operStack.pop();
+                        break;
+                    }
+                    if(prevOper != ")" && prevOper != "(") {
+                        syn_res.push(Lexema(prevOper, Operation));
                     }
                     operStack.pop();
                     continue;
                 }
                 break;
             }
-            operStack.push(tmp.getStr()[0]);
+            operStack.push(tmp.getStr());
         }
         else{
             syn_res.push(tmp);
         }
-        printStack(operStack);
         lex_res.pop();
     }
     while(!operStack.empty()){
-        char prevOper = operStack.top();
-        if(prevOper != ')' && prevOper != '(') {
-            syn_res.push(Lexema(string(1, prevOper), Operation));
+        string prevOper = operStack.top();
+        if(prevOper != ")" && prevOper != "(") {
+            syn_res.push(Lexema(prevOper, Operation));
         }
         operStack.pop();
     }
     print1(syn_res);
-    cout << "scobaCount = " <<  scobaCount << endl;
+//    if(elementErrorIndex > 0){
+//        throw "error in line: " + elementErrorIndex;
+//    }
+//    cout << "scobaCount = " <<  scobaCount << endl;
 }
 
 double Syntax::calculate() {
@@ -103,7 +120,7 @@ double Syntax::calculate() {
         else{
             digitStack.push(stod(frontEl.getStr()));
         }
-        printDoubleStack(digitStack);
+//        printDoubleStack(digitStack);
         syn_res.pop();
     }
     return digitStack.top();
