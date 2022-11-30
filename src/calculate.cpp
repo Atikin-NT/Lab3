@@ -1,10 +1,10 @@
 #include "arifmetic.h"
+#include "Stack.h"
 
 using namespace std;
 
 double Arithmetic::calculate(queue<Lexema> post) {
-    double res = 0;
-    stack<double> digitStack;
+    Stack<double> digitStack;
     Lexema lex;
     while(!post.empty()){
         lex  = post.front();
@@ -12,10 +12,8 @@ double Arithmetic::calculate(queue<Lexema> post) {
         if(lex.getType() == Operation){
             if(digitStack.size() < 2) throw ArgsEx(lex, "Missing argument");
             double a , b;
-            a = digitStack.top();
-            digitStack.pop();
-            b = digitStack.top();
-            digitStack.pop();
+            a = digitStack.pop();
+            b = digitStack.pop();
             switch(lex.getStr()[0]){
                 case '+':
                     digitStack.push(a+b);
@@ -38,5 +36,5 @@ double Arithmetic::calculate(queue<Lexema> post) {
         }
         post.pop();
     }
-    return digitStack.top();
+    return digitStack.pop();
 }
