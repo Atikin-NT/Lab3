@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include "lexemaEx.h"
 #include <stack>
 
 map<string, int> operations = {{"(", 0},
@@ -96,10 +97,16 @@ double Syntax::calculate() {
         Lexema frontEl = syn_res.front();
 
         if(frontEl.getType() == Operation){
-            double a = digitStack.top();
-            digitStack.pop();
-            double b = digitStack.top();
-            digitStack.pop();
+            double a , b;
+            try{
+                a = digitStack.top();
+                digitStack.pop();
+                b = digitStack.top();
+                digitStack.pop();
+            }
+            catch (...){
+
+            }
             switch(frontEl.getStr()[0]){
                 case '+':
                     digitStack.push(a+b);

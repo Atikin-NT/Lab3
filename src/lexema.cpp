@@ -1,2 +1,5 @@
-#include "lexema.h"
+#include "arifmetic.h"
+#include <string>
+#include <iostream>
 
+using namespace std;
