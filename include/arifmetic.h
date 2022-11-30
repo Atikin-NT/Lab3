@@ -1,7 +1,3 @@
-//
-// Created by atikin on 25.11.22.
-//
-
 #ifndef PARSER_ARIFMETIC_H
 #define PARSER_ARIFMETIC_H
 
@@ -16,19 +12,10 @@ public:
     void Validate(queue<Lexema> inf);
 
     //Postfix
-    queue<Lexema> toPostfix(queue<Lexema> inf);  //E;E;E; => EpEpEp;;;
-//    queue<Lexema> toModifiedPostfix(queue<Lexema> inf); //E;E;E; => Ep;Ep;Ep;
-//
-//    //calculate postfix form
-//    queue<double> calculate(queue<Lexema> post);
-//
-//    queue<double> perform(string inp) {
-//        queue<Lexema> lex_res = lex(inp);
-//        Validate(lex_res);
-//        queue<Lexema> synt_res = toModifiedPostfix(lex_res);
-//        queue<double> res = calculate(synt_res);
-//        return res;
-//    }
+    queue<Lexema> toPostfix(queue<Lexema> inf);
+
+    //Calculate
+    double calculate(queue<Lexema> post);
 };
 
 

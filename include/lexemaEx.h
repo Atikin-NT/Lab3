@@ -42,7 +42,19 @@ class OperationEx: public IExeption{
     Lexema lex;
     string mess;
 public:
-    OperationEx(Lexema l, string m = "Brackets"): lex(l), mess(m) {
+    OperationEx(Lexema l, string m = "operation"): lex(l), mess(m) {
+        show();
+    }
+    void show() override{
+        cout << mess << " at " << lex << endl;
+    }
+};
+
+class ArgsEx: public IExeption{
+    Lexema lex;
+    string mess;
+public:
+    ArgsEx(Lexema l, string m = "Arguments"): lex(l), mess(m) {
         show();
     }
     void show() override{

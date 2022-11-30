@@ -100,7 +100,7 @@ TEST(Parser, postfix_1)
     Arithmetic arif;
     queue <Lexema> lex_res = arif.lex(str);
     queue <Lexema> postfix = arif.toPostfix(lex_res);
-    EXPECT_EQ("123|23|8|*|+|5|/|)|",queue_to_string(postfix));
+    EXPECT_EQ("123|23|8|*|+|5|/|",queue_to_string(postfix));
 }
 
 TEST(Parser, postfix_2)
@@ -109,47 +109,50 @@ TEST(Parser, postfix_2)
     Arithmetic arif;
     queue <Lexema> lex_res = arif.lex(str);
     queue <Lexema> postfix = arif.toPostfix(lex_res);
-    EXPECT_EQ("123|10|2|*|+|1|-|20|/|)|",queue_to_string(postfix));
+    EXPECT_EQ("123|10|2|*|+|1|-|20|/|",queue_to_string(postfix));
 }
 
 TEST(Parser, calculate1)
 {
     string str = "( 123 +10 * 2-1)/ 20\n";
-    queue <Lexema> lex_res;
-    lex_res = lex(str);
-    Syntax syntax(lex_res);
-    syntax.polskaWrite();
-    EXPECT_EQ(7.1, syntax.calculate());
+    Arithmetic arif;
+    queue <Lexema> lex_res = arif.lex(str);
+    queue <Lexema> postfix = arif.toPostfix(lex_res);
+    EXPECT_EQ(7.1, arif.calculate(postfix));
 }
 
 TEST(Parser, calculate2)
 {
     string str = "( 123 +10 * 2-1)/ 20\n";
-    queue <Lexema> lex_res;
-    lex_res = lex(str);
-    Syntax syntax(lex_res);
-    syntax.polskaWrite();
-    EXPECT_EQ(7.1, syntax.calculate());
+    Arithmetic arif;
+    queue <Lexema> lex_res = arif.lex(str);
+    queue <Lexema> postfix = arif.toPostfix(lex_res);
+    EXPECT_EQ(7.1, arif.calculate(postfix));
 }
 
 TEST(Parser, calculate3)
 {
     string str = "124+56*( (2-8) / 4)";
-    cout << str << endl;
-    queue <Lexema> lex_res;
-    lex_res = lex(str);
-    print(lex_res);
-    Syntax syntax(lex_res);
-    syntax.polskaWrite();
-    EXPECT_EQ(40, syntax.calculate());
+    Arithmetic arif;
+    queue <Lexema> lex_res = arif.lex(str);
+    queue <Lexema> postfix = arif.toPostfix(lex_res);
+    EXPECT_EQ(40, arif.calculate(postfix));
 }
 
 TEST(Parser, calculate4)
 {
     string str = "78/5+5*2-4";
-    queue <Lexema> lex_res;
-    lex_res = lex(str);
-    Syntax syntax(lex_res);
-    syntax.polskaWrite();
-    EXPECT_EQ(21.6, syntax.calculate());
+    Arithmetic arif;
+    queue <Lexema> lex_res = arif.lex(str);
+    queue <Lexema> postfix = arif.toPostfix(lex_res);
+    EXPECT_EQ(21.6, arif.calculate(postfix));
+}
+
+TEST(Parser, calculate_error)
+{
+    string str = "78/5+5*2-";
+    Arithmetic arif;
+    queue <Lexema> lex_res = arif.lex(str);
+    queue <Lexema> postfix = arif.toPostfix(lex_res);
+    EXPECT_ANY_THROW(arif.calculate(postfix));
 }

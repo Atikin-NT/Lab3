@@ -26,7 +26,7 @@ queue<Lexema> Arithmetic::toPostfix(queue<Lexema> lex_res) {
                     }
                 }
             }
-            if(tmp.getStr() != "(") {
+            if(tmp.getStr() != ")") {
                 operStack.push(tmp);
             }
         }
