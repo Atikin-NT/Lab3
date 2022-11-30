@@ -1,41 +1,10 @@
 #include <gtest.h>
 #include <string>
-#include <iostream>
 #include <queue>
 #include "lexema.h"
-#include "automata.h"
-#include "syntax.h"
 #include "arifmetic.h"
 
 using namespace std;
-
-queue <Lexema> lex(string input) {
-    queue<Lexema>res;
-    input += ' ';
-    string tmp = "";
-    int state = 0;
-    for (char c : input) {
-        switch (state)
-        {
-            case 0:
-                digit(c, tmp, res, state);
-                break;
-            case 1:
-                operation(c, tmp, res, state);
-                break;
-            default:
-                break;
-        }
-    }
-    return res;
-}
-
-void print(queue <Lexema> t) {
-    while (!t.empty()) {
-        cout << t.front() << endl;
-        t.pop();
-    }
-}
 
 string queue_to_string(queue <Lexema> t){
     string res = "";
