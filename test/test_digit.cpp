@@ -37,6 +37,16 @@ void print(queue <Lexema> t) {
     }
 }
 
+string queue_to_string(queue <Lexema> t){
+    string res = "";
+    while (!t.empty()) {
+        res += t.front().getStr();
+        res += "|";
+        t.pop();
+    }
+    return res;
+}
+
 TEST(Parser, lexema_check)
 {
     string str = "( 123 + 23 *    8) / 5\n";
@@ -82,6 +92,24 @@ TEST(Parser, validation_check_operation_error)
     Arithmetic arif;
     queue <Lexema> lex_res = arif.lex(str);
     EXPECT_ANY_THROW(arif.Validate(lex_res));
+}
+
+TEST(Parser, postfix_1)
+{
+    string str = "( 123 + 23 * 8) / 5\n";
+    Arithmetic arif;
+    queue <Lexema> lex_res = arif.lex(str);
+    queue <Lexema> postfix = arif.toPostfix(lex_res);
+    EXPECT_EQ("123|23|8|*|+|5|/|)|",queue_to_string(postfix));
+}
+
+TEST(Parser, postfix_2)
+{
+    string str = "( 123 +10 * 2-1)/ 20\n";
+    Arithmetic arif;
+    queue <Lexema> lex_res = arif.lex(str);
+    queue <Lexema> postfix = arif.toPostfix(lex_res);
+    EXPECT_EQ("123|10|2|*|+|1|-|20|/|)|",queue_to_string(postfix));
 }
 
 TEST(Parser, calculate1)

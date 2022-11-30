@@ -10,11 +10,13 @@
 
 class Arithmetic {
 public:
+    // Lexema
     queue<Lexema> lex(string inp);
 
     void Validate(queue<Lexema> inf);
 
-//    queue<Lexema> toCanonicPostfix(queue<Lexema> inf);  //E;E;E; => EpEpEp;;;
+    //Postfix
+    queue<Lexema> toPostfix(queue<Lexema> inf);  //E;E;E; => EpEpEp;;;
 //    queue<Lexema> toModifiedPostfix(queue<Lexema> inf); //E;E;E; => Ep;Ep;Ep;
 //
 //    //calculate postfix form
